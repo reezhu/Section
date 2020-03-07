@@ -1,0 +1,26 @@
+name: Section
+version: ${project.version}
+main: org.xjcraft.section.Section
+api-version: 1.13
+depend: [SimpleSpigot]
+softdepend: [XJCraftAudit]
+authors: [Ree]
+
+
+
+commands:
+  section:
+    description: Contains all commands in [Section],can be shorted as /sec.
+    usage: use /<command> help to show all commands avaliable in plugin
+    permission: section.command
+    permission-message: You don't have <permission>
+    aliases:
+      - sec
+
+permissions:
+  section.command:
+    description: Allow user to use section command
+    default: true
+  section.op.command:
+    description: Allow user to use section command
+    default: op
