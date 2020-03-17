@@ -6,7 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.event.server.TabCompleteEvent;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.xjcraft.annotation.RCommand;
 import org.xjcraft.api.CommonCommandExecutor;
@@ -14,10 +14,9 @@ import org.xjcraft.section.Section;
 import org.xjcraft.section.config.Config;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class MessageListener implements CommonCommandExecutor, TabCompleter {
+public class MessageListener implements CommonCommandExecutor, TabCompleter, Listener {
     private Section plugin;
 
     public MessageListener(Section plugin) {
