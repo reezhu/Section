@@ -1,12 +1,9 @@
 package org.xjcraft.section;
 
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.xjcraft.CommonPlugin;
 import org.xjcraft.section.listener.MessageListener;
-
-import java.util.Collection;
 
 public final class Section extends CommonPlugin implements PluginMessageListener {
     MessageListener listener;
@@ -26,22 +23,7 @@ public final class Section extends CommonPlugin implements PluginMessageListener
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        Plugin plugin = this.getServer().getPluginManager().getPlugin("XJCraftAudit");
-        Collection<? extends Player> players = getServer().getOnlinePlayers();
-        if (plugin == null) {
-            for (Player player : players) {
-                listener.quit(player);
-            }
-        } else {
-            for (Player player : players) {
-                listener.join(player, "login");
-            }
-        }
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Override
