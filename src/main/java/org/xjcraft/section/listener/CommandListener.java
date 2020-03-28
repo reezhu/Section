@@ -2,16 +2,16 @@ package org.xjcraft.section.listener;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerCommandEvent;
 import org.bukkit.plugin.Plugin;
-import org.xjcraft.api.CommonCommandExecutor;
 import org.xjcraft.section.Section;
 import org.xjcraft.section.config.Config;
 import org.xjcraft.utils.StringUtil;
 
 import java.util.HashMap;
 
-public class CommandListener implements CommonCommandExecutor {
+public class CommandListener implements Listener {
     private Section plugin;
     private MessageListener listener;
     boolean shutdown = false;

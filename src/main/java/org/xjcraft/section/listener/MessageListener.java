@@ -6,7 +6,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 import org.xjcraft.annotation.RCommand;
 import org.xjcraft.api.CommonCommandExecutor;
@@ -24,6 +26,13 @@ public class MessageListener implements CommonCommandExecutor, TabCompleter, Lis
     }
 
 
+    public void query(Player player, String server) {
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("PlayerCount");
+        out.writeUTF(server);
+        player.sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
+    }
+
     public void sendMessage(Player player, String server) {
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("Connect");
@@ -31,7 +40,7 @@ public class MessageListener implements CommonCommandExecutor, TabCompleter, Lis
         player.sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
     }
 
-    @RCommand(value = "join",sender = RCommand.Sender.PLAYER, desc = "加入某个坑")
+    @RCommand(value = "join", sender = RCommand.Sender.PLAYER, desc = "加入某个坑")
     public void join(CommandSender player, String server) {
         join(server, (Player) player);
     }
@@ -45,7 +54,7 @@ public class MessageListener implements CommonCommandExecutor, TabCompleter, Lis
         }
         org.jim.bukkit.audit.PlayerMeta playerMeta = ((org.jim.bukkit.audit.AuditPlugin) plugin).getHelper().getPlayerMeta(player);
         if (playerMeta.getStatus() == org.jim.bukkit.audit.Status.APPLIED_VILLAGE_BASE) {
-            sendMessage(player, server);
+            query(player, server);
         } else {
             player.sendMessage("通过考核之前你无法使用此指令！");
         }
@@ -62,6 +71,16 @@ public class MessageListener implements CommonCommandExecutor, TabCompleter, Lis
         sendMessage(player, "main");
     }
 
+    @EventHandler
+    public void quit(PlayerQuitEvent event) {
+        if (this.plugin.getServer().getPluginManager().getPlugin("XJCraftAudit") == null) {
+            plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+                if (plugin.getServer().getOnlinePlayers().size() == 0) {
+                    plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "stop");
+                }
+            }, 20 * 10);
+        }
+    }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
@@ -73,7 +92,7 @@ public class MessageListener implements CommonCommandExecutor, TabCompleter, Lis
         } else if (args.length == 2) {
             switch (args[0]) {
                 case "join":
-                    return Config.config.getWhitelist();
+                    return new ArrayList<>(Config.config.getWhitelist().keySet());
                 default:
                     break;
             }
