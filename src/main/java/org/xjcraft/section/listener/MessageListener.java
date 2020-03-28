@@ -6,9 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.server.ServerCommandEvent;
 import org.bukkit.plugin.Plugin;
 import org.xjcraft.annotation.RCommand;
 import org.xjcraft.api.CommonCommandExecutor;
@@ -16,7 +14,6 @@ import org.xjcraft.section.Section;
 import org.xjcraft.section.config.Config;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class MessageListener implements CommonCommandExecutor, TabCompleter, Listener {
@@ -65,27 +62,6 @@ public class MessageListener implements CommonCommandExecutor, TabCompleter, Lis
         sendMessage(player, "main");
     }
 
-    @EventHandler
-    public void command(ServerCommandEvent event) {
-        if (event.getCommand().equals("stop")) {
-            Plugin plugin = this.plugin.getServer().getPluginManager().getPlugin("XJCraftAudit");
-            Collection<? extends Player> players = plugin.getServer().getOnlinePlayers();
-            if (plugin == null) {
-                for (Player player : players) {
-                    quit(player);
-                }
-            } else {
-                for (Player player : players) {
-                    join(player, "login");
-                }
-            }
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {

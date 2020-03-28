@@ -12,11 +12,12 @@ import java.util.List;
 public class Config {
     @Instance
     public static Config config = new Config();
-    List<String> whitelist = new ArrayList<String>(){{
+    List<String> whitelist = new ArrayList<String>() {{
         add("build");
         add("test");
         add("fun");
     }};
+    String shutdown = "服务器即将在%count%后重启！";
 
 
 }

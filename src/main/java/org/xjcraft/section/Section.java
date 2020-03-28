@@ -3,6 +3,7 @@ package org.xjcraft.section;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.xjcraft.CommonPlugin;
+import org.xjcraft.section.listener.CommandListener;
 import org.xjcraft.section.listener.MessageListener;
 
 public final class Section extends CommonPlugin implements PluginMessageListener {
@@ -15,6 +16,7 @@ public final class Section extends CommonPlugin implements PluginMessageListener
         listener = new MessageListener(this);
         getServer().getPluginManager().registerEvents(listener, this);
         registerCommand(listener);
+        registerCommand(new CommandListener(this, listener));
         getCommand("section").setTabCompleter(listener);
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this);
