@@ -53,7 +53,7 @@ public class MessageListener implements CommonCommandExecutor, TabCompleter, Lis
             return;
         }
         org.jim.bukkit.audit.PlayerMeta playerMeta = ((org.jim.bukkit.audit.AuditPlugin) plugin).getHelper().getPlayerMeta(player);
-        if (playerMeta.getStatus() == org.jim.bukkit.audit.Status.APPLIED_VILLAGE_BASE) {
+        if (playerMeta != null && playerMeta.getStatus() == org.jim.bukkit.audit.Status.APPLIED_VILLAGE_BASE) {
             query(player, server);
         } else {
             player.sendMessage("通过考核之前你无法使用此指令！");

@@ -39,7 +39,7 @@ public class CommandListener implements Listener {
                     }
                 } else {
                     for (Player player : this.plugin.getServer().getOnlinePlayers()) {
-                        listener.join(player, "login");
+                        listener.sendMessage(player, "login");
                     }
                 }
             }, 10 * 20);
